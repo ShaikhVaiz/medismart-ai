@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · MediSmart{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">YOUR HEALTH ORGANISER</span><h1>Good to see you, {{ user.username }}.</h1><p>Here is your medicine overview for {{ today|date:"D, d M Y" }}.</p></div><a class="btn primary" href="{% url 'medicine_create' %}">＋ Add medicine</a></section>
+<section class="stats-grid">
+  <div class="stat-card"><span class="stat-icon blue">▦</span><span class="stat-label">Medicines tracked</span><strong>{{ medicines|length }}</strong><small>Across your profiles</small></div>
+  <div class="stat-card"><span class="stat-icon green">◷</span><span class="stat-label">Daily schedules</span><strong>{{ schedules|length }}</strong><small>Active reminder times</small></div>
+  <div class="stat-card"><span class="stat-icon amber">!</span><span class="stat-label">Refill alerts</span><strong>{{ refill_count }}</strong><small>Stock needs attention</small></div>
+</section>
+<div class="content-grid">
+  <section class="panel">
+    <div class="panel-heading"><div><h2>Today's schedule</h2><p>Record what happened for each scheduled time.</p></div><button class="btn secondary small" id="enable-notifications" type="button">Enable browser alerts</button></div>
+    {% if schedules %}
+      <div class="schedule-list">
+      {% for item in schedules %}
+        <div class="schedule-row" data-reminder-time="{{ item.time_text }}" data-reminder-name="{{ item.schedule.medicine.name }}">
+          <div class="time-badge">{{ item.time_text }}</div><div class="schedule-main"><strong>{{ item.schedule.medicine.name }}</strong><p>{{ item.schedule.medicine.strength }}{% if item.schedule.medicine.instructions %} · {{ item.schedule.medicine.instructions }}{% endif %}</p></div>
+          {% if item.already_recorded %}<span class="status-pill">{{ item.status_text|title }}</span>{% else %}
+          <form method="post" action="{% url 'record_dose' item.schedule.medicine.id 'taken' %}" class="inline-form">{% csrf_token %}<input type="hidden" name="schedule_id" value="{{ item.schedule.id }}"><button class="icon-button" title="Record taken" aria-label="Record taken">✓</button></form>
+          <form method="post" action="{% url 'record_dose' item.schedule.medicine.id 'skipped' %}" class="inline-form">{% csrf_token %}<input type="hidden" name="schedule_id" value="{{ item.schedule.id }}"><button class="text-button" type="submit">Skip</button></form>
+          {% endif %}
+        </div>
+      {% endfor %}
+      </div>
+    {% else %}<div class="empty-state"><div class="empty-icon">◷</div><h3>Your schedule starts here</h3><p>Add a medicine and enter its prescribed reminder times.</p><a href="{% url 'medicine_create' %}" class="btn primary">Add first medicine</a></div>{% endif %}
+  </section>
+  <aside class="panel side-panel"><div class="panel-heading"><div><h2>Stock watch</h2><p>Estimated remaining supply</p></div></div>
+  {% for medicine in medicines %}
+    <div class="stock-item"><div class="stock-top"><strong>{{ medicine.name }}</strong>{% if medicine.is_expired %}<span class="status-pill danger">Expired</span>{% elif medicine.needs_refill %}<span class="status-pill warning">Refill</span>{% endif %}</div><div class="stock-meta">{{ medicine.stock_quantity }} {{ medicine.get_unit_display|lower }} · {% if medicine.days_remaining != None %}about {{ medicine.days_remaining }} days{% else %}usage not set{% endif %}</div><div class="stock-actions"><a href="{% url 'refill_create' medicine.id %}">Prepare refill request →</a></div></div>
+  {% empty %}<p class="muted">Your stock list will appear here.</p>{% endfor %}
+  <a class="btn secondary full" href="{% url 'medicine_list' %}">Manage all medicines</a>
+  </aside>
+</div>
+<div class="disclaimer">Reminder records are user-entered and do not confirm that a medicine was actually taken. Follow your clinician's instructions; this app does not advise dose changes.</div>
+{% endblock %}

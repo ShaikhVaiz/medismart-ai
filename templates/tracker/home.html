@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}MediSmart AI — Medicine care, made simpler{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">YOUR PERSONAL MEDICINE COMPANION</span>
+    <h1>Stay on schedule.<br><span>Stay prepared.</span></h1>
+    <p>Organise medicine reminders, track remaining stock, and prepare refill requests in one simple dashboard.</p>
+    <div class="hero-actions"><a class="btn primary" href="{% url 'signup' %}">Get started <span>→</span></a><a class="btn secondary" href="{% url 'login' %}">I already have an account</a></div>
+    <div class="trust-row"><span>✓ Private account</span><span>✓ Family profiles</span><span>✓ Refill tracking</span></div>
+  </div>
+  <div class="hero-card">
+    <div class="card-head"><div><span class="eyebrow">YOUR OVERVIEW</span><h3>Today at a glance</h3></div><span class="status-dot"></span></div>
+    <div class="mini-stat-grid"><div class="mini-stat"><span>Daily schedule</span><strong>08:00 · 20:00</strong><small>Example times</small></div><div class="mini-stat"><span>Stock monitor</span><strong>Refill ready</strong><small>Plan ahead</small></div></div>
+    <div class="mock-dose"><div class="pill-icon">✚</div><div><strong>Medicine reminders</strong><p>Keep your schedule in one place</p></div><span class="check-icon">✓</span></div>
+    <div class="mock-dose"><div class="pill-icon amber">▦</div><div><strong>Stock & expiry</strong><p>See what needs attention</p></div><span class="arrow-icon">→</span></div>
+  </div>
+</section>
+<section class="feature-grid">
+  <article class="feature-card"><div class="feature-icon">◷</div><h3>Daily reminders</h3><p>Save prescribed times and record doses as taken or skipped.</p></article>
+  <article class="feature-card"><div class="feature-icon">▤</div><h3>Stock forecast</h3><p>Estimate remaining days and flag medicines that need a refill.</p></article>
+  <article class="feature-card"><div class="feature-icon">♡</div><h3>Family profiles</h3><p>Organise medicine lists separately for people you care for.</p></article>
+  <article class="feature-card"><div class="feature-icon">↗</div><h3>Refill requests</h3><p>Prepare a request and track its local status in your account.</p></article>
+</section>
+<div class="disclaimer">Demo note: this website does not prescribe medicines or automatically contact pharmacies. Enter only instructions provided by your clinician.</div>
+{% endblock %}

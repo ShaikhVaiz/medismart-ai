@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Verify Code & Reset Password · MediSmart{% endblock %}
+{% block content %}
+<div class="form-shell">
+  <div class="form-heading">
+    <span class="eyebrow">ENTER VERIFICATION CODE</span>
+    <h1>Reset Your Password</h1>
+    <p>We sent a 6-digit code to <strong>{{ email }}</strong>. Enter the code and your new password below.</p>
+  </div>
+  <form method="post" class="form-card">
+    {% csrf_token %}
+    <p>
+      <label for="id_otp">6-Digit Verification Code (OTP):</label>
+      <input type="text" name="otp" id="id_otp" maxlength="6" placeholder="123456" value="{{ otp }}" style="font-size: 20px; letter-spacing: 4px; text-align: center; font-weight: bold;" required autofocus>
+    </p>
+    <p>
+      <label for="id_new_password">New Password:</label>
+      <input type="password" name="new_password" id="id_new_password" placeholder="Enter new password" required>
+    </p>
+    <p>
+      <label for="id_confirm_password">Confirm New Password:</label>
+      <input type="password" name="confirm_password" id="id_confirm_password" placeholder="Re-enter new password" required>
+    </p>
+    <button class="btn primary full" type="submit">Update Password & Log In</button>
+    <p class="form-foot">Didn't receive the email? <a href="{% url 'forgot_password' %}">Request a new code</a></p>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}{{ heading }} · MediSmart{% endblock %}
+{% block content %}
+<div class="form-shell wide">
+  <div class="form-heading">
+    <span class="eyebrow">MEDICINE CABINET</span>
+    <h1>{{ heading }}</h1>
+    <p>Enter prescribed medicine and timing information, or use our Multimodal AI scanner.</p>
+  </div>
+
+  <!-- AI Prescription & Medicine Strip Scanner Card -->
+  <div class="ai-scan-banner" style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%); border: 2px dashed #0f766e; border-radius: 14px; padding: 18px 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 240px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+        <span style="font-size: 22px;">🤖</span>
+        <strong style="color: #0f766e; font-size: 15px;">AI Prescription & Medicine Scanner</strong>
+        <span style="background: #0f766e; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 10px; letter-spacing: 0.5px;">GEMINI VISION</span>
+      </div>
+      <p style="margin: 0; color: #526b77; font-size: 12px; line-height: 1.4;">
+        Upload a photo of your doctor's prescription or medicine strip. The AI will read it and auto-fill the form!
+      </p>
+    </div>
+    <div>
+      <input type="file" id="ai-prescription-input" accept="image/*" style="display: none;">
+      <button type="button" class="btn primary small" id="ai-scan-btn" onclick="document.getElementById('ai-prescription-input').click();">
+        📷 Scan Image with AI
+      </button>
+    </div>
+  </div>
+  
+  <div id="ai-scan-status" style="display: none; padding: 12px 16px; border-radius: 10px; margin-bottom: 18px; font-size: 13px; font-weight: 500;"></div>
+
+  <form method="post" class="form-card" id="medicine-form">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="field-wrap">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}
+          <small class="help-text">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <small class="error">{{ error }}</small>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button class="btn primary full" type="submit">Save medicine</button>
+    <a class="cancel-link" href="{% url 'medicine_list' %}">Cancel</a>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const fileInput = document.getElementById("ai-prescription-input");
+  const scanBtn = document.getElementById("ai-scan-btn");
+  const statusBox = document.getElementById("ai-scan-status");
+
+  fileInput.addEventListener("change", async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    scanBtn.disabled = true;
+    scanBtn.textContent = "Analyzing with AI...";
+    statusBox.style.display = "block";
+    statusBox.style.background = "#eef4ff";
+    statusBox.style.color = "#1d4ed8";
+    statusBox.style.border = "1px solid #bfdbfe";
+    statusBox.innerHTML = "⏳ <strong>Gemini Vision AI is analyzing your image...</strong> Please wait 2-3 seconds.";
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
+    try {
+      const response = await fetch("{% url 'scan_prescription' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrfToken,
+        },
+        body: formData,
+      });
+
+      const res = await response.json();
+
+      if (res.success && res.data) {
+        const d = res.data;
+        if (d.name) document.getElementById("id_name").value = d.name;
+        if (d.strength) document.getElementById("id_strength").value = d.strength;
+        if (d.instructions) document.getElementById("id_instructions").value = d.instructions;
+        if (d.unit) document.getElementById("id_unit").value = d.unit;
+        if (d.daily_usage) document.getElementById("id_daily_usage").value = d.daily_usage;
+        if (d.stock_quantity) document.getElementById("id_stock_quantity").value = d.stock_quantity;
+        if (d.schedule_times) document.getElementById("id_schedule_times").value = d.schedule_times;
+        if (d.notes && document.getElementById("id_notes")) {
+          document.getElementById("id_notes").value = d.notes;
+        }
+
+        statusBox.style.background = "#ecfdf5";
+        statusBox.style.color = "#065f46";
+        statusBox.style.border = "1px solid #a7f3d0";
+        statusBox.innerHTML = "✨ <strong>Prescription Scanned Successfully!</strong> The form fields below have been auto-filled by AI. Please review and click <strong>Save medicine</strong>.";
+      } else {
+        throw new Error(res.error || "Could not extract details.");
+      }
+    } catch (err) {
+      statusBox.style.background = "#fff1f2";
+      statusBox.style.color = "#9f1239";
+      statusBox.style.border = "1px solid #fecdd3";
+      statusBox.innerHTML = "⚠️ " + err.message;
+    } finally {
+      scanBtn.disabled = false;
+      scanBtn.textContent = "📷 Scan Image with AI";
+      fileInput.value = "";
+    }
+  });
+});
+</script>
+{% endblock %}

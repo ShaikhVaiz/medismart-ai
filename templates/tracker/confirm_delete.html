@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Delete medicine · MediSmart{% endblock %}
+{% block content %}<div class="form-shell"><div class="form-heading"><h1>Delete {{ object.name }}?</h1><p>This also removes its schedules and logs from this local project database.</p></div><form method="post" class="form-card">{% csrf_token %}<button class="btn danger-btn full" type="submit">Confirm delete</button><a class="cancel-link" href="{% url 'medicine_list' %}">Cancel</a></form></div>{% endblock %}

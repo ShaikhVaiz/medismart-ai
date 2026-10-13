@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}My medicines · MediSmart{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">YOUR MEDICINE CABINET</span><h1>My medicines</h1><p>Track prescribed instructions, stock levels and expiry dates.</p></div><a class="btn primary" href="{% url 'medicine_create' %}">＋ Add medicine</a></section>
+<div class="table-wrap"><table><thead><tr><th>Medicine</th><th>Profile</th><th>Stock</th><th>Estimated supply</th><th>Expiry</th><th>Actions</th></tr></thead><tbody>
+{% for m in medicines %}<tr><td><strong>{{ m.name }}</strong><small>{{ m.strength }}</small></td><td>{% if m.profile %}{{ m.profile.name }}{% else %}Me{% endif %}</td><td>{{ m.stock_quantity }} {{ m.get_unit_display|lower }}</td><td>{% if m.days_remaining != None %}{{ m.days_remaining }} days{% else %}—{% endif %}{% if m.needs_refill %}<span class="status-pill warning">Refill</span>{% endif %}</td><td>{% if m.expiry_date %}{{ m.expiry_date }}{% else %}—{% endif %}{% if m.is_expired %}<span class="status-pill danger">Expired</span>{% endif %}</td><td class="actions"><a href="{% url 'medicine_edit' m.id %}">Edit</a><a href="{% url 'refill_create' m.id %}">Refill</a><a href="{% url 'medicine_delete' m.id %}">Delete</a></td></tr>
+{% empty %}<tr><td colspan="6"><div class="empty-state compact"><h3>No medicines added yet</h3><a class="btn primary" href="{% url 'medicine_create' %}">Add your first medicine</a></div></td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

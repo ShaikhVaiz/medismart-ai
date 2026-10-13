@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Refill requests · MediSmart{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">STOCK & REORDER</span><h1>Refill requests</h1><p>Requests created here are saved in your account only until a pharmacy integration is connected.</p></div><a class="btn secondary" href="{% url 'medicine_list' %}">View medicines</a></section>
+<div class="table-wrap"><table><thead><tr><th>Medicine</th><th>Pharmacy</th><th>Quantity</th><th>Status</th><th>Requested</th></tr></thead><tbody>
+{% for r in requests %}<tr><td><strong>{{ r.medicine.name }}</strong></td><td>{{ r.pharmacy.name|default:"Not selected" }}</td><td>{{ r.quantity_requested }}</td><td><span class="status-pill">{{ r.get_status_display }}</span></td><td>{{ r.created_at|date:"d M Y, H:i" }}</td></tr>
+{% empty %}<tr><td colspan="5"><div class="empty-state compact"><h3>No refill requests yet</h3><p>Use “Prepare refill request” from a medicine entry.</p></div></td></tr>{% endfor %}
+</tbody></table></div>
+<div class="panel"><h2>Pharmacy directory</h2><p class="muted">Directory entries must be added by the site administrator. No pharmacies are preloaded or contacted automatically.</p>
+{% for p in pharmacies %}<div class="stock-item"><strong>{{ p.name }}</strong><div class="stock-meta">{{ p.address }}{% if p.phone %} · {{ p.phone }}{% endif %}</div>{% if p.website %}<a href="{{ p.website }}" target="_blank" rel="noopener noreferrer">Visit website ↗</a>{% endif %}</div>{% empty %}<p class="muted">No pharmacy partners configured yet.</p>{% endfor %}
+</div>
+{% endblock %}

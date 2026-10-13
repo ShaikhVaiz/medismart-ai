@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Log in · MediSmart{% endblock %}
+{% block content %}
+<div class="form-shell">
+  <div class="form-heading">
+    <span class="eyebrow">WELCOME BACK</span>
+    <h1>Log in to MediSmart</h1>
+    <p>Access your medicine schedule and stock tracker.</p>
+  </div>
+  <form method="post" class="form-card">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="message error">
+        {% for error in form.non_field_errors %}
+          <div>{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {{ form.as_p }}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    <button class="btn primary full" type="submit">Log in</button>
+    <p class="form-foot"><a href="{% url 'forgot_password' %}">Forgot password?</a> · New here? <a href="{% url 'signup' %}">Create an account</a></p>
+  </form>
+</div>
+{% endblock %}

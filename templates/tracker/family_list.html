@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Family profiles · MediSmart{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">CARE TOGETHER</span><h1>Family profiles</h1><p>Create profiles to organise each person's medicine list separately.</p></div><a class="btn primary" href="{% url 'family_create' %}">＋ Add profile</a></section>
+<div class="profile-grid">
+{% for p in profiles %}<article class="profile-card"><div class="avatar">{{ p.name|first|upper }}</div><div><h3>{{ p.name }}</h3><p>{{ p.relationship|default:"Family profile" }}</p><small>Added {{ p.created_at|date:"d M Y" }}</small></div><span class="status-pill">Private</span></article>
+{% empty %}<div class="empty-state"><div class="empty-icon">♡</div><h3>No family profiles yet</h3><p>Add a profile, then choose it when adding a medicine.</p><a class="btn primary" href="{% url 'family_create' %}">Add family profile</a></div>{% endfor %}
+</div>
+<div class="disclaimer">Profiles in this starter project are managed by the account owner. Shared caregiver logins and cross-account invitations are not implemented yet.</div>
+{% endblock %}
