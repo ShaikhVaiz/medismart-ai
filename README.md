@@ -27,6 +27,23 @@ MediSmart AI combines Django, Gemini Vision, TiDB Cloud and Resend to provide a 
 | Resend | Email OTP delivery |
 | Vercel | Deployment |
 
+## 📸 Application Screenshots
+
+### Login Page
+![Login Page](docs/screenshots/login.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### AI Prescription Scanner
+![Prescription Scanner](docs/screenshots/prescription-scanner.png)
+
+### Medicine Management
+![Medicine Management](docs/screenshots/medicine-management.png)
+
+### Family Profiles
+![Family Profiles](docs/screenshots/family-profiles.png)
+
 ## 📁 Project Structure
 
 ```text
