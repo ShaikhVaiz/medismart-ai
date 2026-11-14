@@ -76,19 +76,21 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Create a `.env` file in the project root using `.env.example` as a reference.
+Configure the required environment variables in your local environment or deployment platform, using `.env.example` as a reference.
 
 Configure the following services:
 
 - **Django:** `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`
 - **Resend:** `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
 - **TiDB Cloud:** `USE_TIDB`, `TIDB_HOST`, `TIDB_PORT`, `TIDB_USER`, `TIDB_PASSWORD`, `TIDB_DB_NAME`
+- **Gemini Vision:** `GEMINI_API_KEY`
 
 For local development, `USE_TIDB=False` uses SQLite automatically.
 
 Set `USE_TIDB=True` and provide your TiDB credentials to use the cloud database.
 
 Never commit your actual `.env` file or expose API keys and passwords.
+
 ### 5. Apply database migrations
 
 ```bash
