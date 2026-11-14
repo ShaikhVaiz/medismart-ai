@@ -1,64 +1,128 @@
-# MediSmart AI — Medicine Reminder & Reorder (starter project)
+# MediSmart AI 💊
 
-A Django starter website for personal medicine schedule organisation, stock estimates, family profiles, and local refill request tracking.
+**An AI-powered medicine management platform designed to help users organize prescriptions, track medicines, and manage medication schedules.**
 
-## Included and working locally
-- Signup, login, logout (Django auth)
-- User-owned medicine records and schedules
-- Family profiles under the logged-in account
-- Daily schedule dashboard
-- Taken/skipped log records
-- Simple stock decrement when marking a dose taken
-- Stock-days estimate and low-stock warning
-- Expiry-date warning
-- Locally saved refill requests
-- Admin panel to add pharmacy directory entries
-- Responsive mobile/desktop UI
-- Foreground browser notification demo while the dashboard is open
+MediSmart AI combines Django, Gemini Vision, TiDB Cloud and Resend to provide a centralized platform for medicine management.
 
-## Not integrated yet
-- The refill form does not send a request to a real pharmacy.
-- No online medicine catalogue, payment, delivery or prescription verification.
-- No SMS/WhatsApp/email/push notification provider.
-- Browser reminders are not guaranteed when the browser/device is closed.
-- No AI/LLM, prescription OCR or clinical interaction checker is connected.
-- Family profiles are owned by one account; caregiver invitations/shared login are not implemented.
-- Stock decrement uses one unit per "Taken" click as a demo. Adjust it to your prescribed unit quantity and schedule before real-world use.
+## ✨ Features
 
-## Requirements
-- Python 3.10+ recommended
-- Internet only needed to install Django; Google Fonts are optional and can be removed from `static/tracker/style.css`.
+- **AI Prescription Scanning:** Use Gemini Vision to process prescription images.
+- **Medicine Management:** Organize and manage medicine information.
+- **Medicine Reminders:** Get browser-based reminders for medication schedules.
+- **Stock Tracking:** Keep track of available medicine quantities.
+- **Family Profiles:** Manage medicine information for family members.
+- **Refill Management:** Manage medicine refill requests.
+- **Email OTP Verification:** Secure email-based verification using Resend.
+- **Cloud Database:** Store application data using TiDB Cloud.
 
-## Windows setup
-Open Command Prompt or PowerShell in the extracted `medismart_ai` folder:
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Backend programming |
+| Django | Web framework |
+| HTML, CSS, JavaScript | Frontend |
+| Gemini Vision | AI prescription image processing |
+| TiDB Cloud | Database |
+| Resend | Email OTP delivery |
+| Vercel | Deployment |
+
+## 📁 Project Structure
+
+```text
+medismart-ai/
+│
+├── medismart/
+├── tracker/
+├── templates/
+├── static/
+├── staticfiles/
+│
+├── .env.example
+├── .gitignore
+├── manage.py
+├── requirements.txt
+├── build_files.sh
+├── vercel.json
+└── README.md
+```
+
+## 🚀 Local Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ShaikhVaiz/medismart-ai.git
+cd medismart-ai
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+Activate it on Windows:
 
 ```powershell
-py -m venv .venv
-.venv\Scripts\activate
-python -m pip install --upgrade pip
+venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
-python manage.py makemigrations tracker
+```
+
+### 4. Configure environment variables
+
+Create a `.env` file in the project root using `.env.example` as a reference.
+
+Configure the following services:
+
+- **Django:** `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`
+- **Resend:** `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
+- **TiDB Cloud:** `USE_TIDB`, `TIDB_HOST`, `TIDB_PORT`, `TIDB_USER`, `TIDB_PASSWORD`, `TIDB_DB_NAME`
+
+For local development, `USE_TIDB=False` uses SQLite automatically.
+
+Set `USE_TIDB=True` and provide your TiDB credentials to use the cloud database.
+
+Never commit your actual `.env` file or expose API keys and passwords.
+### 5. Apply database migrations
+
+```bash
 python manage.py migrate
-python manage.py createsuperuser
+```
+
+### 6. Start the development server
+
+```bash
 python manage.py runserver
 ```
 
-Open http://127.0.0.1:8000/
+Open:
 
-- Create a normal account from the website.
-- Visit `/admin/` to sign in with the superuser and add Pharmacy entries.
-- In the app, add a medicine, stock quantity, daily usage and schedule times such as `08:00, 20:00`.
-- Click “Enable browser alerts” on the dashboard and allow notifications. Keep the dashboard open to test reminders.
+```text
+http://127.0.0.1:8000/
+```
 
-## Notes before public deployment
-This is a learning/demo starter, not a certified medical device or pharmacy platform. Do not enter real patient data until the deployment has been security-reviewed. Use HTTPS, environment-based secrets, `DEBUG=False`, proper `ALLOWED_HOSTS`, backups, secure file handling and a production server. Run `python manage.py check --deploy` after production settings are configured. Review local laws and professional requirements before adding real pharmacy ordering or prescription workflows.
+## 🔐 Security
 
-## Planned roadmap
-1. Core medicine tracking and account isolation (included)
-2. Improve dose quantity/stock reconciliation and tests
-3. PWA service worker + push notification provider
-4. Caregiver invitations and permission management
-5. Pharmacy API/partner portal and order status webhooks
-6. OCR with manual verification
-7. AI assistant restricted to safe app-navigation and sourced medicine information
-8. Production PostgreSQL, monitoring, backups and security review
+- Keep API keys and database credentials in environment variables.
+- Do not upload `.env` files containing secrets.
+- Use email OTP verification for account security.
+
+## ⚕️ Disclaimer
+
+MediSmart AI is a medicine management and organization tool. It is not a substitute for professional medical advice, diagnosis or treatment. Always follow instructions from a qualified healthcare professional.
+
+## 👨‍💻 Developer
+
+**Shaikh Vaiz**
+
+GitHub: [ShaikhVaiz](https://github.com/ShaikhVaiz)
+
+---
+
+*Built with Python, Django and AI-powered technology.*
