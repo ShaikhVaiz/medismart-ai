@@ -1,321 +1,22 @@
-# 🔎 Digital Lost-and-Found Registry
+# 💊 MediSmart AI — Medicine Reminder & Management
 
-A Flask-based web application that helps users report lost and found belongings, discover possible matches, and verify ownership through a structured claim process.
+A Django-based medicine management application designed to help users organize medicine schedules, monitor medicine stock, manage family profiles, and scan prescription images using Gemini Vision AI.
 
-\<p align="center">   \<img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge\&logo=python\&logoColor=white)" alt="Python">   \<img src="[https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white](https://img.shields.io/badge/Flask-000000?style=for-the-badge\&logo=flask\&logoColor=white)" alt="Flask">   \<img src="[https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge](https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge)" alt="SQLAlchemy">   \<img src="[https://img.shields.io/badge/TiDB%20Cloud-00A3E0?style=for-the-badge](https://img.shields.io/badge/TiDB%20Cloud-00A3E0?style=for-the-badge)" alt="TiDB Cloud">   \<img src="[https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white](https://img.shields.io/badge/Vercel-000000?style=for-the-badge\&logo=vercel\&logoColor=white)" alt="Vercel"> \</p>
+<p align="center">
 
-\<p align="center">   \<a href="[https://lost-and-found-registry.vercel.app/](https://lost-and-found-registry.vercel.app/)">\<strong>🌐 Live Application\</strong>\</a> ·   \<a href="[https://github.com/ShaikhVaiz/lost-and-found-registry](https://github.com/ShaikhVaiz/lost-and-found-registry)">\<strong>📂 GitHub Repository\</strong>\</a> \</p>
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Gemini AI](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+![TiDB Cloud](https://img.shields.io/badge/TiDB%20Cloud-00A3E0?style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
----
+</p>
 
-## 📑 Table of Contents
+<p align="center">
 
-- [Overview](#-overview)
-- [Problem Statement](#-problem-statement)
-- [Key Features](#-key-features)
-- [Application Screenshots](#-application-screenshots)
-- [Technology Stack](#-technology-stack)
-- [System Architecture](#-system-architecture)
-- [Application Workflow](#-application-workflow)
-- [Matching and Claim Process](#-matching-and-claim-process)
-- [Project Structure](#-project-structure)
-- [Installation and Setup](#-installation-and-setup)
-- [Environment Configuration](#-environment-configuration)
-- [Running the Application](#-running-the-application)
-- [Automated Testing](#-automated-testing)
-- [Deployment](#-deployment)
-- [Security Considerations](#-security-considerations)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
+[📂 GitHub Repository](https://github.com/ShaikhVaiz/medismart-ai)
 
----
-
-## 📌 Overview
-
-The **Digital Lost-and-Found Registry** provides a centralized platform for reporting and recovering lost belongings.
-
-Instead of depending on manual registers or disconnected communication, users can submit lost and found reports, discover possible matches, and submit claims to verify ownership.
-
-Administrators can review claims, manage reports, and handle claim decisions through an administrative dashboard.
-
-The project focuses on making item recovery more organized while protecting confidential ownership information.
-
-## 🎯 Problem Statement
-
-Traditional lost-and-found processes often depend on manual registers, verbal communication, or separate records.
-
-This can make it difficult to:
-
-- Search through previously reported items.
-- Identify possible matches between lost and found belongings.
-- Verify whether a claimant is the rightful owner.
-- Track the status of an ownership claim.
-- Maintain a clear record of administrative decisions.
-
-This application provides a structured digital process to address these challenges.
-
-## ✨ Key Features
-
-| Feature                  | Description                                                             |
-| ------------------------ | ----------------------------------------------------------------------- |
-| User Authentication      | Registration, login, logout, and password recovery                      |
-| Lost Item Reporting      | Submit information about missing belongings                             |
-| Found Item Reporting     | Register belongings that have been found                                |
-| Possible Match Detection | Compare lost and found reports using matching criteria                  |
-| Ownership Verification   | Submit confidential information to support an ownership claim           |
-| Claim Management         | Track pending, approved, and rejected claims                            |
-| Admin Dashboard          | Review claims and manage item reports                                   |
-| Claim Audit History      | Maintain records of important claim-related actions                     |
-| Privacy Protection       | Password hashing, CSRF protection, and restricted administrative access |
-| Email OTP                | Email-based verification using Resend                                   |
-
-## 📸 Application Screenshots
-
-### 1. Login Page
-
-\<p align="center">   \<img src="docs/screenshots/login.png" width="90%" alt="Lost and Found Login Page"> \</p>
-
-### 2. User Dashboard
-
-\<p align="center">   \<img src="docs/screenshots/dashboard.png" width="90%" alt="Lost and Found User Dashboard"> \</p>
-
-### 3. Report an Item
-
-\<p align="center">   \<img src="docs/screenshots/report-form.png" width="90%" alt="Lost and Found Item Report Form"> \</p>
-
-### 4. Possible Matches
-
-\<p align="center">   \<img src="docs/screenshots/matches.png" width="90%" alt="Possible Lost and Found Matches"> \</p>
-
-### 5. Claim Verification
-
-\<p align="center">   \<img src="docs/screenshots/claim-page.png" width="90%" alt="Ownership Claim Page"> \</p>
-
-### 6. Admin Dashboard
-
-\<p align="center">   \<img src="docs/screenshots/admin-dashboard.png" width="90%" alt="Lost and Found Admin Dashboard"> \</p>
-
-## 🛠️ Technology Stack
-
-| Component           | Technology                    |
-| ------------------- | ----------------------------- |
-| Backend             | Python, Flask                 |
-| Frontend            | HTML5, CSS3, JavaScript       |
-| Database ORM        | SQLAlchemy, Flask-SQLAlchemy  |
-| Local Database      | SQLite                        |
-| Production Database | TiDB Cloud (MySQL-compatible) |
-| Authentication      | Werkzeug Password Hashing     |
-| CSRF Protection     | Flask-WTF                     |
-| Email OTP           | Resend API                    |
-| Production Server   | Gunicorn                      |
-| Deployment          | Vercel                        |
-
-## 🏗️ System Architecture
-
-```mermaid
-flowchart TD
-    A[User / Administrator] --> B[Web Interface]
-    B --> C[Flask Backend]
-    C --> D[Authentication and Access Control]
-    C --> E[Lost and Found Reports]
-    E --> F[Matching Process]
-    F --> G[Possible Match Results]
-    G --> H[Ownership Claim]
-    H --> I[Administrator Review]
-    I --> J[Claim Status and Resolution]
-    C --> K[SQLAlchemy]
-    K --> L[(SQLite / TiDB Cloud)]
-    C --> M[Resend Email Service]
-```
-
-## ⚙️ Application Workflow
-
-1. A user registers and logs in.
-2. The user submits a lost or found item report.
-3. The application compares reports and identifies possible matches.
-4. Users can review relevant match suggestions.
-5. A claimant submits ownership information for verification.
-6. An administrator reviews the submitted claim.
-7. The administrator approves or rejects the claim.
-8. The application updates the related claim and report status.
-
-## 🔍 Matching and Claim Process
-
-The application compares lost and found reports using matching criteria to identify potentially related items.
-
-The claim process provides an additional ownership-verification step instead of allowing an item to be claimed solely because its description appears similar.
-
-Administrators review submitted claims before making a decision.
-
-## 📁 Project Structure
-
-```text
-lost-and-found-registry/
-│
-├── api/
-├── docs/
-│   └── screenshots/
-│       ├── login.png
-│       ├── dashboard.png
-│       ├── report-form.png
-│       ├── matches.png
-│       ├── claim-page.png
-│       └── admin-dashboard.png
-│
-├── public/
-├── static/
-├── templates/
-│
-├── app.py
-├── requirements.txt
-├── test_app.py
-├── Procfile
-├── vercel.json
-├── .gitignore
-└── README.md
-```
-
-## 🚀 Installation and Setup
-
-### Prerequisites
-
-- Python
-- Git
-- A supported local SQLite or production TiDB Cloud database configuration
-- Resend API key if email OTP functionality is required
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/ShaikhVaiz/lost-and-found-registry.git
-cd lost-and-found-registry
-```
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-### 3. Activate the Virtual Environment
-
-**Windows PowerShell:**
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-**Linux / macOS:**
-
-```bash
-source .venv/bin/activate
-```
-
-### 4. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 5. Configure Environment Variables
-
-Create a private `.env` file in the project root.
-
-Configure the required application settings:
-
-```env
-SECRET_KEY=your_secure_secret_key
-ADMIN_ID=your_admin_id
-ADMIN_PASSWORD=your_admin_password
-```
-
-For email OTP functionality, configure:
-
-```env
-RESEND_API_KEY=your_resend_api_key
-```
-
-For production database usage, configure the TiDB Cloud connection settings required by the application.
-
-**Important:** Never commit your actual `.env` file, administrator password, API keys, or database credentials.
-
-### 6. Run the Application
-
-```bash
-python app.py
-```
-
-Open your browser:
-
-```text
-http://127.0.0.1:5000
-```
-
-## 🧪 Automated Testing
-
-The project includes an automated test suite.
-
-Run the tests using:
-
-```bash
-python -m unittest test_app.py
-```
-
-The existing project test suite covers application functionality and important application workflows.
-
-## ☁️ Deployment
-
-The application is deployed using Vercel.
-
-**Live Application:**
-[https://lost-and-found-registry.vercel.app/](https://lost-and-found-registry.vercel.app/)
-
-Production configuration uses environment variables for application security, administrator credentials, email integration, and database connectivity.
-
-For production use, configure a persistent cloud database rather than relying on temporary local storage.
-
-## 🔒 Security Considerations
-
-- Passwords are stored using secure password hashing.
-- CSRF protection is implemented using Flask-WTF.
-- Administrative functions require restricted access.
-- Secret keys and credentials should be configured through environment variables.
-- Ownership-verification details should be treated as confidential.
-- Production database backups should be maintained.
-
-## 🚀 Future Improvements
-
-- Improve matching accuracy and relevance.
-- Add more detailed item search and filtering.
-- Improve claim status notifications.
-- Expand administrative reporting.
-- Add further automated integration tests.
-- Improve accessibility and mobile responsiveness.
-
-## 👨‍💻 Author
-
-**Shaikh Vaiz**
-
-- GitHub: [@ShaikhVaiz](https://github.com/ShaikhVaiz)
-- Repository: [Digital Lost-and-Found Registry](https://github.com/ShaikhVaiz/lost-and-found-registry)
-
----
-
-\<p align="center">
-&#x20; \<strong>Built with Python, Flask, SQLAlchemy, and TiDB Cloud.\</strong>
-\</p>\</WritingBlock}
-
-## 3. MediSmart AI
-
-Repository: `medismart-ai`
-
-\<WritingBlock id="73103" variant="document"># 💊 MediSmart AI
-
-An AI-powered medicine management platform designed to help users organize prescriptions, manage medicines, track stock, and maintain medication schedules.
-
-\<p align="center">   \<img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge\&logo=python\&logoColor=white)" alt="Python">   \<img src="[https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white](https://img.shields.io/badge/Django-092E20?style=for-the-badge\&logo=django\&logoColor=white)" alt="Django">   \<img src="[https://img.shields.io/badge/Gemini%20Vision-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white](https://img.shields.io/badge/Gemini%20Vision-8E75B2?style=for-the-badge\&logo=googlegemini\&logoColor=white)" alt="Gemini Vision">   \<img src="[https://img.shields.io/badge/TiDB%20Cloud-00A3E0?style=for-the-badge](https://img.shields.io/badge/TiDB%20Cloud-00A3E0?style=for-the-badge)" alt="TiDB Cloud">   \<img src="[https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white](https://img.shields.io/badge/Vercel-000000?style=for-the-badge\&logo=vercel\&logoColor=white)" alt="Vercel"> \</p>
-
-\<p align="center">   \<a href="[https://medismart-ai-omega.vercel.app/](https://medismart-ai-omega.vercel.app/)">\<strong>🌐 Live Application\</strong>\</a> ·   \<a href="[https://github.com/ShaikhVaiz/medismart-ai](https://github.com/ShaikhVaiz/medismart-ai)">\<strong>📂 GitHub Repository\</strong>\</a> \</p>
+</p>
 
 ---
 
@@ -334,8 +35,8 @@ An AI-powered medicine management platform designed to help users organize presc
 - [Database Configuration](#-database-configuration)
 - [Running the Application](#-running-the-application)
 - [Deployment](#-deployment)
-- [Security Considerations](#-security-considerations)
-- [Medical Disclaimer](#-medical-disclaimer)
+- [Limitations](#-limitations)
+- [Security and Medical Disclaimer](#-security-and-medical-disclaimer)
 - [Future Improvements](#-future-improvements)
 - [Author](#-author)
 
@@ -343,108 +44,124 @@ An AI-powered medicine management platform designed to help users organize presc
 
 ## 📌 Overview
 
-**MediSmart AI** is a web-based medicine management platform that brings prescription organization and medication tracking into one place.
+**MediSmart AI** is a web-based medicine reminder and management application built with Django.
 
-The application uses Django for backend development and Gemini Vision for AI-assisted prescription image processing.
+It provides a centralized place for users to manage their medicines, organize daily schedules, record taken or skipped doses, monitor stock levels, and maintain family profiles.
 
-It also integrates TiDB Cloud for database storage and Resend for email-based OTP verification.
+The application also includes a Gemini-powered prescription scanner that can extract medicine information from uploaded prescription or medicine images.
 
-The goal is to make medicine information easier to organize and manage through a centralized interface.
+The project uses SQLite for local development and supports TiDB Cloud for a remote database configuration.
 
 ## 🎯 Problem Statement
 
-Managing prescriptions and medicine schedules can become difficult when information is stored across paper documents or separate records.
+Managing medicines and daily schedules can become difficult when information is scattered across prescriptions, medicine packages, and manual notes.
 
-Users may need a convenient way to:
+Users may need to:
 
-- Organize prescription information.
-- Manage medicine details.
-- Track available medicine quantities.
-- Maintain medication schedules.
-- Manage medicine information for family members.
-- Handle medicine refill information.
+- Keep track of multiple medicines.
+- Remember daily medication schedules.
+- Monitor remaining medicine quantities.
+- Check medicine expiry dates.
+- Organize medicine information for family members.
+- Keep prescription information accessible.
 
-MediSmart AI aims to provide a centralized digital platform for these tasks.
+MediSmart AI aims to make these activities easier through one digital medicine-management platform.
 
 ## ✨ Key Features
 
-| Feature                  | Description                                                 |
-| ------------------------ | ----------------------------------------------------------- |
-| AI Prescription Scanning | Uses Gemini Vision to process prescription images           |
-| Medicine Management      | Organizes and manages medicine information                  |
-| Medicine Reminders       | Provides browser-based reminders for medication schedules   |
-| Stock Tracking           | Tracks available medicine quantities                        |
-| Family Profiles          | Supports medicine information management for family members |
-| Refill Management        | Helps manage medicine refill requests                       |
-| Email OTP Verification   | Provides email-based verification using Resend              |
-| Cloud Database           | Uses TiDB Cloud for application data storage                |
+| Feature | Description |
+|---|---|
+| User Authentication | Signup, login, and logout using Django authentication |
+| Medicine Management | Add, edit, and delete medicine records |
+| Prescription Scanner | Uses Gemini Vision to extract medicine information from uploaded images |
+| Daily Schedule Dashboard | Displays medicine schedules for the day |
+| Dose Tracking | Records medicines as taken or skipped |
+| Stock Management | Updates stock when a dose is marked as taken |
+| Stock Monitoring | Estimates remaining stock days and displays low-stock warnings |
+| Expiry Alerts | Identifies medicines with expired dates |
+| Family Profiles | Organizes medicine records under family profiles |
+| Refill Requests | Saves local medicine refill requests |
+| Pharmacy Directory | Allows administrators to manage pharmacy directory entries |
+| Password Recovery | Uses email OTP verification through Resend |
+| Browser Notifications | Demonstrates foreground reminders while the dashboard remains open |
 
 ## 📸 Application Screenshots
 
 ### 1. Login Page
 
-\<p align="center">
-&#x20; \<img src="docs/screenshots/login.png" width="90%" alt="MediSmart AI Login Page">
-\</p>
+![MediSmart AI Login Page](docs/screenshots/login.png)
 
 ### 2. Dashboard
 
-\<p align="center">   \<img src="docs/screenshots/dashboard.png" width="90%" alt="MediSmart AI Dashboard"> \</p>
+![MediSmart AI Dashboard](docs/screenshots/dashboard.png)
 
-### 3. AI Prescription Scanner
+### 3. Prescription Scanner
 
-\<p align="center">
-&#x20; \<img src="docs/screenshots/prescription-scanner.png" width="90%" alt="MediSmart AI Prescription Scanner">
-\</p>
+![MediSmart AI Prescription Scanner](docs/screenshots/prescription-scanner.png)
 
 ### 4. Medicine Management
 
-\<p align="center">   \<img src="docs/screenshots/medicine-management.png" width="90%" alt="MediSmart AI Medicine Management"> \</p>
+![MediSmart AI Medicine Management](docs/screenshots/medicine-management.png)
 
 ### 5. Family Profiles
 
-\<p align="center">   \<img src="docs/screenshots/family-profiles.png" width="90%" alt="MediSmart AI Family Profiles"> \</p>
+![MediSmart AI Family Profiles](docs/screenshots/family-profiles.png)
+
+---
 
 ## 🛠️ Technology Stack
 
-| Component                  | Technology            |
-| -------------------------- | --------------------- |
-| Programming Language       | Python                |
-| Backend Framework          | Django                |
-| Frontend                   | HTML, CSS, JavaScript |
-| AI Integration             | Google Gemini Vision  |
-| Database                   | TiDB Cloud            |
-| Local Development Database | SQLite                |
-| Email Service              | Resend                |
-| Image Processing           | Pillow                |
-| Static File Handling       | WhiteNoise            |
-| Deployment                 | Vercel                |
+| Component | Technology |
+|---|---|
+| Programming Language | Python |
+| Backend Framework | Django |
+| Frontend | HTML, CSS, JavaScript |
+| AI Integration | Google Gemini API |
+| Image Processing | Pillow |
+| Database | SQLite / TiDB Cloud |
+| Database Driver | PyMySQL |
+| Email Service | Resend |
+| Static File Handling | WhiteNoise |
+| Environment Configuration | python-dotenv |
+| Deployment Configuration | Vercel |
 
 ## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
     A[User] --> B[Django Web Application]
-    B --> C[Authentication and User Management]
-    B --> D[Prescription Image Upload]
-    D --> E[Gemini Vision API]
-    E --> F[Prescription Processing Results]
-    F --> G[Medicine Management]
-    G --> H[Medication Schedule and Stock]
-    B --> I[TiDB Cloud / SQLite]
-    G --> I
-    B --> J[Resend Email Service]
+
+    B --> C[User Authentication]
+    B --> D[Medicine Management]
+    B --> E[Family Profiles]
+    B --> F[Daily Medicine Schedule]
+
+    D --> G[Stock and Expiry Monitoring]
+    F --> H[Dose Tracking]
+
+    B --> I[Prescription Image Upload]
+    I --> J[Gemini Vision API]
+    J --> K[Extracted Medicine Information]
+
+    B --> L[Password Recovery]
+    L --> M[Resend Email Service]
+
+    B --> N[Database Layer]
+    N --> O[(SQLite / TiDB Cloud)]
 ```
 
 ## ⚙️ Application Workflow
 
-1. The user accesses the MediSmart AI application.
-2. The user signs in or completes the required email verification.
-3. The user can manage medicine information through the dashboard.
-4. Prescription images can be submitted for AI-assisted processing.
-5. Gemini Vision processes the prescription image.
-6. The application supports medicine organization and schedule management.
-7. Application data is stored using the configured database.
+1. The user creates an account or logs in.
+2. The user accesses the medicine dashboard.
+3. The user adds medicine details manually or uses the prescription scanner.
+4. Medicine information and schedule times are saved.
+5. The dashboard displays daily medicine schedules.
+6. The user records doses as taken or skipped.
+7. The application updates stock when a dose is marked as taken.
+8. Stock and expiry warnings help users monitor their medicine records.
+9. Family profiles allow users to organize medicines for family members.
+10. Refill requests can be created and reviewed within the application.
 
 ## 📁 Project Structure
 
@@ -460,7 +177,20 @@ medismart-ai/
 │       └── family-profiles.png
 │
 ├── medismart/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+│
 ├── tracker/
+│   ├── migrations/
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   ├── urls.py
+│   ├── emails.py
+│   └── ai_scanner.py
+│
 ├── templates/
 ├── static/
 ├── staticfiles/
@@ -470,19 +200,18 @@ medismart-ai/
 ├── manage.py
 ├── requirements.txt
 ├── build_files.sh
-├── vercel.json
-└── README.md
+└── vercel.json
 ```
 
 ## 🚀 Installation and Setup
 
 ### Prerequisites
 
-- Python
+- Python 3.10 or later
 - Git
-- Google Gemini API key
-- Resend API key
-- TiDB Cloud account for cloud database configuration
+- Google Gemini API key for live prescription scanning
+- Resend API key for email-based OTP delivery
+- TiDB Cloud credentials for cloud database configuration
 
 ### 1. Clone the Repository
 
@@ -493,8 +222,8 @@ cd medismart-ai
 
 ### 2. Create a Virtual Environment
 
-```bash
-python -m venv venv
+```powershell
+py -m venv .venv
 ```
 
 ### 3. Activate the Virtual Environment
@@ -502,53 +231,49 @@ python -m venv venv
 **Windows PowerShell:**
 
 ```powershell
-.\venv\Scripts\Activate.ps1
-```
-
-**Linux / macOS:**
-
-```bash
-source venv/bin/activate
+.\.venv\Scripts\Activate.ps1
 ```
 
 ### 4. Install Dependencies
 
-```bash
+```powershell
+python -m pip install --upgrade pip
 pip install -r requirements.txt
+```
+
+### 5. Apply Database Migrations
+
+```powershell
+python manage.py makemigrations tracker
+python manage.py migrate
+```
+
+### 6. Create an Administrator Account
+
+```powershell
+python manage.py createsuperuser
 ```
 
 ## 🔐 Environment Configuration
 
-The repository includes an `.env.example` file containing the environment configuration template.
-
-Create your local `.env` file:
-
-**Windows PowerShell:**
+Create a `.env` file in the project root using the provided example:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Update the values in `.env` according to your configuration.
-
-### Django Configuration
+Configure the values in `.env`:
 
 ```env
 DEBUG=True
 SECRET_KEY=your_secure_secret_key
 ALLOWED_HOSTS=127.0.0.1,localhost
-```
 
-### Resend Email Configuration
+GEMINI_API_KEY=your_gemini_api_key
 
-```env
 RESEND_API_KEY=your_resend_api_key
 RESEND_FROM_EMAIL=your_verified_sender_email
-```
 
-### TiDB Cloud Configuration
-
-```env
 USE_TIDB=False
 TIDB_HOST=your_tidb_host
 TIDB_PORT=4000
@@ -557,87 +282,102 @@ TIDB_PASSWORD=your_tidb_password
 TIDB_DB_NAME=your_database_name
 ```
 
-### Gemini Vision Configuration
+**Important:**
 
-```env
-GEMINI_API_KEY=your_gemini_api_key
-```
-
-**Important:** These are example values. Never commit real API keys, database passwords, or your private `.env` file to GitHub.
+- Use a private, randomly generated `SECRET_KEY`.
+- Never commit your real `.env` file or API credentials.
+- Keep `USE_TIDB=False` for local SQLite development.
+- Configure the required cloud database values before enabling TiDB.
 
 ## 🗄️ Database Configuration
 
-MediSmart AI supports local SQLite development and TiDB Cloud database configuration.
+MediSmart AI supports two database configurations:
 
-| Setting          | Purpose                              |
-| ---------------- | ------------------------------------ |
-| `USE_TIDB=False` | Uses the local SQLite database       |
-| `USE_TIDB=True`  | Enables the TiDB Cloud configuration |
-| `TIDB_HOST`      | TiDB Cloud database host             |
-| `TIDB_PORT`      | Database connection port             |
-| `TIDB_USER`      | Database username                    |
-| `TIDB_PASSWORD`  | Database password                    |
-| `TIDB_DB_NAME`   | Database name                        |
+| Database | Purpose |
+|---|---|
+| SQLite | Local development |
+| TiDB Cloud | Remote MySQL-compatible database |
 
-For local development, keep `USE_TIDB=False`.
+To use SQLite:
 
-For cloud database usage, set `USE_TIDB=True` and configure the required TiDB Cloud credentials.
+```env
+USE_TIDB=False
+```
+
+To use TiDB Cloud:
+
+```env
+USE_TIDB=True
+```
+
+Configure the TiDB host, port, username, password, and database name before starting the application.
 
 ## ▶️ Running the Application
 
-### 1. Apply Database Migrations
+Start the Django development server:
 
-```bash
-python manage.py migrate
-```
-
-### 2. Start the Development Server
-
-```bash
+```powershell
 python manage.py runserver
 ```
 
-### 3. Open the Application
-
-Visit:
+Open your browser:
 
 ```text
 http://127.0.0.1:8000/
 ```
 
+### Administrator Panel
+
+Visit:
+
+```text
+http://127.0.0.1:8000/admin/
+```
+
+Log in using the superuser account created during setup. The administrator can manage pharmacy directory entries.
+
 ## ☁️ Deployment
 
-The project is deployed using Vercel.
+The repository includes a Vercel deployment configuration using Django's WSGI application.
 
-**Live Application:**
-[https://medismart-ai-omega.vercel.app/](https://medismart-ai-omega.vercel.app/)
+For deployment:
 
-Deployment requires the appropriate Django, database, Gemini, and Resend environment variables to be configured in the hosting platform.
+1. Configure the required environment variables in the hosting platform.
+2. Configure TiDB Cloud for persistent production database storage.
+3. Set `DEBUG=False`.
+4. Configure the appropriate `ALLOWED_HOSTS`.
+5. Deploy the application using the repository's Vercel configuration.
 
-## 🔒 Security Considerations
+**Important:** Local SQLite storage and temporary serverless storage should not be treated as persistent production storage.
 
-- Keep Django's secret key private.
-- Store API keys and database credentials in environment variables.
-- Never upload private `.env` files to GitHub.
-- Use secure database credentials.
-- Avoid including personal or confidential prescription information in public screenshots.
+## ⚠️ Limitations
 
-## ⚕️ Medical Disclaimer
+- Browser reminders are a demonstration and are not guaranteed when the browser or device is closed.
+- Refill requests are saved inside the application and are not sent to a real pharmacy.
+- There is no online medicine catalogue, payment, or delivery integration.
+- Prescription scanning may return incorrect or incomplete information.
+- When Gemini credentials are unavailable or the API fails, the scanner can return demonstration or fallback data.
+- Stock is reduced by one unit for each dose marked as taken. This may not represent every prescription's actual quantity.
+- Family profiles belong to the account owner; caregiver invitations and shared access are not implemented.
 
-MediSmart AI is intended to support medicine organization and prescription management.
+## 🔒 Security and Medical Disclaimer
 
-AI-assisted prescription processing may make mistakes. Extracted medicine names, quantities, and instructions should always be checked against the original prescription and confirmed with a qualified healthcare professional.
-
-This application is not a substitute for professional medical advice, diagnosis, or treatment.
+- Keep secret keys and API credentials private.
+- Use HTTPS and production security settings when deploying.
+- Do not enter real patient information into an unreviewed demonstration deployment.
+- Always compare AI-extracted information with the original prescription.
+- Confirm medicine names, strengths, and instructions with a qualified healthcare professional.
+- MediSmart AI is a medicine-management project, not a substitute for medical advice, diagnosis, or treatment.
 
 ## 🚀 Future Improvements
 
-- Improve prescription image processing.
-- Expand medicine schedule management.
-- Improve medicine stock and refill tracking.
-- Enhance family profile management.
-- Improve notification and reminder functionality.
-- Expand automated testing and application monitoring.
+- Improve dose quantity and stock reconciliation.
+- Add reliable background and push notifications.
+- Introduce caregiver invitations and permission management.
+- Integrate pharmacy APIs and order-status tracking.
+- Improve prescription scanning with manual verification.
+- Add more automated tests.
+- Improve production monitoring, backups, and security.
 
 ## 👨‍💻 Author
 
@@ -648,4 +388,8 @@ This application is not a substitute for professional medical advice, diagnosis,
 
 ---
 
-\<p align="center">   \<strong>Built with Python, Django, Gemini Vision, and TiDB Cloud.\</strong> \</p>
+<p align="center">
+
+**Built with Python, Django, Gemini Vision, and TiDB Cloud.**
+
+</p>
